@@ -45,6 +45,14 @@ function App() {
     setTodo(updateTodos);
   }
 
+  // const handleClick = event => {
+  //   if(event.target.style.textDecoration){
+  //     event.target.style.removeProperty('text-decoration');
+  //   } else{
+  //     event.target.style.setProperty('text-decoration', 'line-through')
+  //   }
+  // }
+
   function markAsEditing(id) {
     const updateTodos = todos.map(todo => {
       if (todo.id === id) {
@@ -95,14 +103,14 @@ function App() {
           return (
             <li key={todo.id}>
               {!todo.isEditing ? (
-                <span className='d-flex'>
+                <span>
                   <input
                     type="checkbox"
                     onChange={() => completeTodo(todo.id)}
-                    checked={todo.isComplete ? true : false}
-                  />
+                    checked={todo.isComplete ? true : false}                  />
                   <span
-                    onClick={() => markAsEditing(todo.id)}
+                    onDoubleClick={() => markAsEditing(todo.id)}
+                    className = {`${todo.isComplete ? 'line-through': ''}`}
                   >
                     {todo.title}
                   </span>
