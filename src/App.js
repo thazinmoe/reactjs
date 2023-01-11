@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Task} from './Task';
 import './App.css';
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
       return todo;
     });
 
-    console.log("updateTodos", updateTodos);
+    console.log("completeTodo", updateTodos);
     setTodo(updateTodos);
   }
 
@@ -99,40 +100,21 @@ function App() {
       />
       <button onClick={addTodo}>Add Todo</button>
       <ul>
-        {todos.map((todo) => {
+        {todos.map((todo,index) => {
           return (
-            <li key={todo.id}>
-              {!todo.isEditing ? (
-                <span>
-                  <input
-                    type="checkbox"
-                    onChange={() => completeTodo(todo.id)}
-                    checked={todo.isComplete ? true : false}                  />
-                  <span
-                    onDoubleClick={() => markAsEditing(todo.id)}
-                    className = {`${todo.isComplete ? 'line-through': ''}`}
-                  >
-                    {todo.title}
-                  </span>
-                </span>
-              ) : (
-                <input
-                  type="text"
-                  onBlur={(event) => updateTodo(event, todo.id)}
-                  onKeyDown={event => {
-                    if(event.key === 'Enter'){
-                      updateTodo(event, todo.id);
-                    }else if(event.key === 'Escape'){
-                      cancelEdit(event, todo.id);
-                    }
-                  }}
-                  defaultValue={todo.title}
-                  autoFocus
-                />
-              )}
-
-              <button onClick={() => deleteTodo(todo.id)}>X</button>
-            </li>
+            <React.Fragment key={index}>
+              <Task
+                id = {todo.id}
+                title = {todo.title}
+                isComplete = {todo.isComplete}
+                isEditing = {todo.isEditing}
+                completeTodo = {completeTodo}
+                markAsEditing = {markAsEditing}
+                updateTodo = {updateTodo}
+                cancelEdit = {cancelEdit}
+                deleteTodo = {deleteTodo}
+              />
+            </React.Fragment>
           );
         })}
       </ul>
